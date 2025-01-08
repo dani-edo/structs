@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"time"
 )
@@ -21,13 +22,18 @@ func (u *user) clearUserName() {
 	u.lastName = ""
 }
 
-func newUser(firstName, lastName, birthdate string) *user { // utility function that create struct
+func newUser(firstName, lastName, birthdate string) (*user, error) { // utility function that create struct
+
+	if firstName == "" || lastName == "" || birthdate == "" {
+		return nil, errors.New("First name, last name and birthdate are required\n")
+	}
+
 	return &user{
 		firstName: firstName,
 		lastName:  lastName,
 		birthdate: birthdate,
 		createdAt: time.Now(),
-	}
+	}, nil
 }
 
 func main() {
@@ -36,7 +42,12 @@ func main() {
 	userBirthdate := getUserData("Please enter your birthdate (MM/DD/YYYY): ")
 
 	var appUser *user
-	appUser = newUser(userFirstName, userLastName, userBirthdate)
+	appUser, err := newUser(userFirstName, userLastName, userBirthdate)
+
+	if err != nil {
+		fmt.Print(err)
+		return
+	}
 
 	// ... do something awesome with that gathered data!
 
@@ -48,6 +59,6 @@ func main() {
 func getUserData(promptText string) string {
 	fmt.Print(promptText)
 	var value string
-	fmt.Scan(&value)
+	fmt.Scanln(&value)
 	return value
 }
