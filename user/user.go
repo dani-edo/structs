@@ -28,8 +28,8 @@ func (u *User) ClearUserName() {
 	u.lastName = ""
 }
 
-func NewAdmin(email, password string) *Admin {
-	return &Admin{
+func NewAdmin(email, password string) Admin {
+	return Admin{
 		email:     email,
 		passsowrd: password,
 		User: User{
