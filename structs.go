@@ -19,6 +19,11 @@ func main() {
 		return
 	}
 
+	admin := user.NewAdmin("admin", "admin")
+	admin.OutputUserDetails()
+	admin.ClearUserName()
+	admin.OutputUserDetails()
+
 	// ... do something awesome with that gathered data!
 
 	appUser.OutputUserDetails()
